@@ -32,7 +32,7 @@ function LoginPage() {
                 <form onSubmit={handleSubmit} className="space-y-6">
                   {/* EMAIL INPUT */}
                   <div>
-                    <label className="auth-input-label">Email</label>
+                    <label className="auth-input-label">Địa chỉ email</label>
                     <div className="relative">
                       <MailIcon className="auth-input-icon" />
 
@@ -48,7 +48,7 @@ function LoginPage() {
 
                   {/* PASSWORD INPUT */}
                   <div>
-                    <label className="auth-input-label">Password</label>
+                    <label className="auth-input-label">Mật khẩu</label>
                     <div className="relative">
                       <LockIcon className="auth-input-icon" />
 
@@ -57,7 +57,7 @@ function LoginPage() {
                         value={formData.password}
                         onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                         className="input"
-                        placeholder="Enter your password"
+                        placeholder="Nhập mật khẩu của bạn"
                       />
                     </div>
                   </div>
@@ -67,14 +67,14 @@ function LoginPage() {
                     {isLoggingIn ? (
                       <LoaderIcon className="w-full h-5 animate-spin text-center" />
                     ) : (
-                      "Sign In"
+                      "Đăng nhập"
                     )}
                   </button>
                 </form>
 
                 <div className="mt-6 text-center">
                   <Link to="/signup" className="auth-link">
-                    Don't have an account? Sign Up
+                    Chưa có tài khoản? Đăng ký ngay
                   </Link>
                 </div>
               </div>
@@ -85,7 +85,7 @@ function LoginPage() {
               <div>
                 <img
                   src="/login.png"
-                  alt="People using mobile devices"
+                  alt="Mọi người sử dụng thiết bị di động"
                   className="w-full h-auto object-contain"
                 />
                 <div className="mt-6 text-center">

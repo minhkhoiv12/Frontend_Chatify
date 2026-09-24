@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { axiosInstance } from "../lib/axios";
 import toast from "react-hot-toast";
 import { useAuthStore } from "./useAuthStore";
+import { getUserErrorMessage } from "../lib/errorMessage";
 
 const notificationSound = new Audio("/sounds/notification.mp3");
 
@@ -39,7 +40,7 @@ export const useChatStore = create((set, get) => ({
       const res = await axiosInstance.get("/messages/contacts");
       set({ allContacts: res.data, loadedContacts: true });
     } catch (error) {
-      toast.error(error.response?.data?.message || "Không thể tải danh bạ.");
+      toast.error(getUserErrorMessage(error, "Không thể tải danh bạ."));
     } finally {
       set({ isUsersLoading: false });
     }
@@ -63,7 +64,7 @@ export const useChatStore = create((set, get) => ({
     } catch (error) {
       set({
         searchResults: [],
-        searchError: error.response?.data?.message || "Không thể tìm kiếm người dùng.",
+        searchError: getUserErrorMessage(error, "Không thể tìm kiếm người dùng."),
       });
     } finally {
       set({ isSearchLoading: false });
@@ -78,7 +79,7 @@ export const useChatStore = create((set, get) => ({
       const res = await axiosInstance.get("/messages/chats");
       set({ chats: res.data, loadedChats: true });
     } catch (error) {
-      toast.error(error.response?.data?.message || "Không thể tải cuộc trò chuyện.");
+      toast.error(getUserErrorMessage(error, "Không thể tải cuộc trò chuyện."));
     } finally {
       set({ isUsersLoading: false });
     }
@@ -92,7 +93,7 @@ export const useChatStore = create((set, get) => ({
       const res = await axiosInstance.get(`/messages/${userId}`);
       set({ messages: res.data, loadedMessagesUserId: userId });
     } catch (error) {
-      toast.error(error.response?.data?.message || "Đã xảy ra lỗi");
+      toast.error(getUserErrorMessage(error));
     } finally {
       set({ isMessagesLoading: false });
     }
@@ -125,7 +126,7 @@ export const useChatStore = create((set, get) => ({
       }));
     } catch (error) {
       set((state) => ({ messages: state.messages.filter((message) => message._id !== tempId) }));
-      toast.error(error.response?.data?.message || "Đã xảy ra lỗi");
+      toast.error(getUserErrorMessage(error));
     }
   },
 

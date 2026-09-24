@@ -3,6 +3,7 @@ import { useAuthStore } from "../store/useAuthStore";
 import BorderAnimatedContainer from "../components/BorderAnimatedContainer";
 import { MessageCircleIcon, LockIcon, MailIcon, UserIcon, LoaderIcon } from "lucide-react";
 import { Link } from "react-router";
+import toast from "react-hot-toast";
 
 function SignUpPage() {
   const [formData, setFormData] = useState({ fullName: "", email: "", password: "" });
@@ -10,6 +11,13 @@ function SignUpPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).{8,}$/;
+    if (!passwordRegex.test(formData.password)) {
+      toast.error("Mật khẩu phải có ít nhất 8 ký tự, gồm chữ thường, chữ hoa, chữ số và ký tự đặc biệt.");
+      return;
+    }
+
     signup(formData);
   };
 
@@ -24,15 +32,15 @@ function SignUpPage() {
                 {/* HEADING TEXT */}
                 <div className="text-center mb-8">
                   <MessageCircleIcon className="w-12 h-12 mx-auto text-slate-400 mb-4" />
-                  <h2 className="text-2xl font-bold text-slate-200 mb-2">Create Account</h2>
-                  <p className="text-slate-400">Sign up for a new account</p>
+                  <h2 className="text-2xl font-bold text-slate-200 mb-2">Tạo tài khoản</h2>
+                  <p className="text-slate-400">Đăng ký tài khoản mới</p>
                 </div>
 
                 {/* FORM */}
                 <form onSubmit={handleSubmit} className="space-y-6">
                   {/* FULL NAME */}
                   <div>
-                    <label className="auth-input-label">Full Name</label>
+                    <label className="auth-input-label">Họ và tên</label>
                     <div className="relative">
                       <UserIcon className="auth-input-icon" />
 
@@ -48,7 +56,7 @@ function SignUpPage() {
 
                   {/* EMAIL INPUT */}
                   <div>
-                    <label className="auth-input-label">Email</label>
+                    <label className="auth-input-label">Địa chỉ email</label>
                     <div className="relative">
                       <MailIcon className="auth-input-icon" />
 
@@ -64,7 +72,7 @@ function SignUpPage() {
 
                   {/* PASSWORD INPUT */}
                   <div>
-                    <label className="auth-input-label">Password</label>
+                    <label className="auth-input-label">Mật khẩu</label>
                     <div className="relative">
                       <LockIcon className="auth-input-icon" />
 
@@ -73,7 +81,7 @@ function SignUpPage() {
                         value={formData.password}
                         onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                         className="input"
-                        placeholder="Enter your password"
+                        placeholder="Nhập mật khẩu của bạn"
                       />
                     </div>
                   </div>
@@ -83,14 +91,14 @@ function SignUpPage() {
                     {isSigningUp ? (
                       <LoaderIcon className="w-full h-5 animate-spin text-center" />
                     ) : (
-                      "Create Account"
+                      "Tạo tài khoản"
                     )}
                   </button>
                 </form>
 
                 <div className="mt-6 text-center">
                   <Link to="/login" className="auth-link">
-                    Already have an account? Login
+                    Đã có tài khoản? Đăng nhập
                   </Link>
                 </div>
               </div>
@@ -101,7 +109,7 @@ function SignUpPage() {
               <div>
                 <img
                   src="/signup.png"
-                  alt="People using mobile devices"
+                  alt="Mọi người sử dụng thiết bị di động"
                   className="w-full h-auto object-contain"
                 />
                 <div className="mt-6 text-center">

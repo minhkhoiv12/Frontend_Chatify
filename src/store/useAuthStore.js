@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { axiosInstance } from "../lib/axios";
 import toast from "react-hot-toast";
 import { io } from "socket.io-client";
+import { getUserErrorMessage } from "../lib/errorMessage";
 
 const BASE_URL = import.meta.env.MODE === "development" ? "http://localhost:3000" : "https://back-chatify.onrender.com";
 
@@ -35,7 +36,7 @@ export const useAuthStore = create((set, get) => ({
       toast.success("Tạo tài khoản thành công!");
       get().connectSocket();
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(getUserErrorMessage(error));
     } finally {
       set({ isSigningUp: false });
     }
@@ -51,7 +52,7 @@ export const useAuthStore = create((set, get) => ({
 
       get().connectSocket();
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(getUserErrorMessage(error));
     } finally {
       set({ isLoggingIn: false });
     }
@@ -78,7 +79,7 @@ export const useAuthStore = create((set, get) => ({
       toast.success("Cập nhật profile thành công");
     } catch (error) {
       console.log("Có lỗi cập nhật profile:", error);
-      toast.error(error.response.data.message);
+      toast.error(getUserErrorMessage(error, "Không thể cập nhật ảnh đại diện."));
     }
   },
   connectSocket: () => {
